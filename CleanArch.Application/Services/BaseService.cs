@@ -1,19 +1,20 @@
 ﻿
 using AutoMapper;
 using CleanArch.Application.Interfaces;
+using CleanArch.Domain.DomainObjects;
 using CleanArch.Domain.Interfaces;
 
 namespace CleanArch.Application.Services
 {
-    public abstract class BaseService<Entity, Dto> : IBaseService<Dto>
+    public abstract class BaseService<T, Dto> : IBaseService<Dto>
         where Dto : class
-        where Entity : class
+        where T : Entity
     {
         
-        public readonly IBaseRepository<Entity> repository;
+        public readonly IBaseRepository<T> repository;
         public readonly IMapper mapper;
 
-        public BaseService(IBaseRepository<Entity> _repository, IMapper _mapper)
+        public BaseService(IBaseRepository<T> _repository, IMapper _mapper)
         {
             repository = _repository;
             mapper = _mapper;
@@ -21,7 +22,7 @@ namespace CleanArch.Application.Services
 
         public Task Add(Dto entityDto)
         {
-            var entity = mapper.Map<Entity>(entityDto);
+            var entity = mapper.Map<T>(entityDto);
             return repository.Add(entity);
         }
 
@@ -42,7 +43,7 @@ namespace CleanArch.Application.Services
 
         public Task Update(Dto entityDto)
         {
-            var entity = mapper.Map<Entity>(entityDto);
+            var entity = mapper.Map<T>(entityDto);
             return repository.Update(entity);
         }
 

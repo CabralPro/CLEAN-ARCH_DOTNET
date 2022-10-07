@@ -1,4 +1,4 @@
-﻿using CleanArch.Domain.Entities;
+﻿
 using CleanArch.Infra.Data.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,8 +9,6 @@ namespace CleanArch.Infra.Data.Context
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         { }
-
-        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

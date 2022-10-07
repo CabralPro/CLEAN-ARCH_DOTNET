@@ -6,7 +6,7 @@ namespace CleanArch.WebApi
         public static void Main(string[] args)
         {
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(builder => 
+                .ConfigureWebHostDefaults(builder =>
                     builder.UseStartup<Startup>())
                 .Build()
                 .Run();

@@ -5,52 +5,47 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanArch.Infra.Data.Repositories
 {
-    public class BaseRepository<Entity> : IBaseRepository<Entity>
-        where Entity : class
+    public class BaseRepository<T> : IBaseRepository<T>
+        where T : Entity
     {
         public readonly AppDbContext dbContext;
-        public readonly DbSet<Entity> dbSet;
+        public readonly DbSet<T> dbSet;
 
         public BaseRepository(AppDbContext dbContext)
         {
             this.dbContext = dbContext;
-            dbSet = dbContext.Set<Entity>();
+            dbSet = dbContext.Set<T>();
         }
 
-        public async Task Add(Entity entity)
+        public async Task Add(T entity)
         {
             dbContext.Add(entity);
-            var resp = await dbContext.SaveChangesAsync();
-            if (resp != 1)
-                throw new DomainException("It was not possible to save the entity");
+            await dbContext.SaveChangesAsync();
         }
 
-        public async Task<Entity> GetByIdAsync(Guid entityId)
+        public async Task<bool> Exist(Guid entityId)
         {
-            var entity = await dbSet.FindAsync(entityId);
-            if (entity is null)
-                throw new DomainException("No entity found for the given id");
-
-            return entity;
+            var entity = await GetByIdAsync(entityId);
+            return entity != null;
         }
 
-        public Task<List<Entity>> GetListAsync() =>
+        public async Task<T> GetByIdAsync(Guid entityId) =>
+             await dbSet.FindAsync(entityId);
+
+        public Task<List<T>> GetListAsync() =>
             dbSet.ToListAsync();
 
         public async Task Remove(Guid entityId)
         {
-            dbContext.Remove(entityId);
-            var resp = await dbContext.SaveChangesAsync();
-            if (resp != 1)
-                throw new DomainException("It was not possible to remove the entity");
+            var entityDb = await GetByIdAsync(entityId);
+            dbContext.Remove<T>(entityDb);
+            await dbContext.SaveChangesAsync();
         }
 
-        public async Task Update(Entity entity)
+        public Task Update(T entity)
         {
             dbContext.Update(entity);
-            var resp = await dbContext.SaveChangesAsync();
-            if (resp != 1)
-                throw new DomainException("It was not possible to update the entity");
+            return dbContext.SaveChangesAsync();
         }
     }
 }
