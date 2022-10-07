@@ -7,9 +7,9 @@ namespace CleanArch.Domain.Interfaces
     {
         Task<List<T>> GetListAsync();
         Task<T> GetByIdAsync(Guid entityId);
-        Task Add(T entity);
-        Task Update(T entity);
-        Task Remove(Guid entityId);
+        Task<T> Add(T entity);
+        Task<T> Update(T entity);
         Task<bool> Exist(Guid entityId);
+        Task Remove(Guid entityId);
     }
 }

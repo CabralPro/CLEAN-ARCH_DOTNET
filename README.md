@@ -2,7 +2,7 @@
 
 Basic project with "Clean Architetucture" application and "DDD"
 
-![alt text](https://github.com/CabralPro/CLEAN-ARCH_DOTNET/blob/master/demo_images/demo.png?raw=true)
+![alt text](https://github.com/CabralPro/CLEAN-ARCH_DOTNET/blob/main/demo_images/demo.png)
 
 
 ### Create Migration

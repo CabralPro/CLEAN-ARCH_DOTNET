@@ -17,10 +17,11 @@ namespace CleanArch.Infra.Data.Repositories
             dbSet = dbContext.Set<T>();
         }
 
-        public async Task Add(T entity)
+        public async Task<T> Add(T entity)
         {
             dbContext.Add(entity);
             await dbContext.SaveChangesAsync();
+            return await GetByIdAsync(entity.Id);
         }
 
         public async Task<bool> Exist(Guid entityId)
@@ -29,8 +30,14 @@ namespace CleanArch.Infra.Data.Repositories
             return entity != null;
         }
 
-        public async Task<T> GetByIdAsync(Guid entityId) =>
-             await dbSet.FindAsync(entityId);
+        public async Task<T> GetByIdAsync(Guid entityId)
+        {
+            var entity = await dbSet.FindAsync(entityId);
+            if (entity == null)
+                throw new DomainException("There is no entity for the given id");
+            
+            return entity;
+        }
 
         public Task<List<T>> GetListAsync() =>
             dbSet.ToListAsync();
@@ -38,14 +45,15 @@ namespace CleanArch.Infra.Data.Repositories
         public async Task Remove(Guid entityId)
         {
             var entityDb = await GetByIdAsync(entityId);
-            dbContext.Remove<T>(entityDb);
+            dbContext.Remove(entityDb);
             await dbContext.SaveChangesAsync();
         }
 
-        public Task Update(T entity)
+        public async Task<T> Update(T entity)
         {
             dbContext.Update(entity);
-            return dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
+            return await GetByIdAsync(entity.Id);
         }
     }
 }

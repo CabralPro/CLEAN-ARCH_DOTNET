@@ -1,5 +1,6 @@
 using CleanArch.Application.Dtos;
 using CleanArch.Application.Interfaces;
+using CleanArch.WebApi.Controllers.ResponseTypes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.WebApi.Controllers
@@ -19,8 +20,7 @@ namespace CleanArch.WebApi.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         public async Task<ActionResult> GetById([FromQuery] Guid id)
         {
             try
@@ -34,33 +34,31 @@ namespace CleanArch.WebApi.Controllers
                 return ErrorResponse(ex);
             }
         }
-        
+
         [HttpPost]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status201Created)]
         public async Task<ActionResult> Post([FromBody] ProductDto productDto)
         {
             try
             {
-                await _productService.Add(productDto);
-                return OkResponse();
+                var productResult = await _productService.Add(productDto);
+                return CreateResponse(productResult);
             }
             catch (Exception ex)
             {
                 Logger.LogError($"Error create product : {ex.Message}; InnerExeption : {ex.InnerException}");
                 return ErrorResponse(ex);
             }
-        }        
+        }
 
         [HttpPut]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         public async Task<ActionResult> Put([FromBody] ProductDto productDto)
         {
             try
             {
-                await _productService.Update(productDto);
-                return OkResponse();
+                var productResult = await _productService.Update(productDto);
+                return ContentResponse(productResult);
             }
             catch (Exception ex)
             {
@@ -70,14 +68,13 @@ namespace CleanArch.WebApi.Controllers
         }
 
         [HttpDelete]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> Delete([FromQuery] Guid id)
         {
             try
             {
                 await _productService.Remove(id);
-                return OkResponse();
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -86,10 +83,8 @@ namespace CleanArch.WebApi.Controllers
             }
         }
 
-
         [HttpGet("list")]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(List<ProductDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult> GetList()
         {
             try
@@ -103,7 +98,6 @@ namespace CleanArch.WebApi.Controllers
                 return ErrorResponse(ex);
             }
         }
-
 
     }
 }
