@@ -23,6 +23,7 @@ namespace CleanArch.WebApi
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseCustomExceptionHandler();
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseHttpsRedirection();
