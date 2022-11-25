@@ -27,8 +27,8 @@ namespace CleanArch.WebApi
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseHttpsRedirection();
-            app.UseAuthorization();
             app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(config => config.MapControllers());
         }
 
