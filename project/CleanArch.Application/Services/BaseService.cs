@@ -20,33 +20,38 @@ namespace CleanArch.Application.Services
             mapper = _mapper;
         }
 
-        public async Task<T2> Add(T2 entityDto)
+        public async Task<T2> AddAsync(T2 entityDto, CancellationToken cancellation)
         {
             var entity = mapper.Map<T1>(entityDto);
-            await repository.Add(entity);
-            return await GetByIdAsync(entity.Id);
+            await repository.AddAsync(entity, cancellation);
+            return await GetByIdAsync(entity.Id, cancellation);
         }
 
-        public async Task<T2> GetByIdAsync(Guid entityDtoId)
+        public async Task<T2> GetByIdAsync(Guid entityDtoId, CancellationToken cancellation)
         {
-            var entity = await repository.GetByIdAsync(entityDtoId);
+            var entity = await repository.GetByIdAsync(entityDtoId, cancellation);
             return mapper.Map<T2>(entity);
         }
 
-        public async Task<List<T2>> GetListAsync()
+        public async Task<List<T2>> ListAsync(int page, int size, CancellationToken cancellation)
         {
-            var entityList = await repository.GetListAsync();
+            var entityList = await repository.ListAsync(page, size, cancellation);
             return mapper.Map<List<T2>>(entityList);
         }
 
-        public Task Remove(Guid entityDtoId) =>
-            repository.Remove(entityDtoId);
+        public Task<int> CountAsync(CancellationToken cancellation)
+        {
+            return repository.CountAsync(cancellation);
+        }
 
-        public async Task<T2> Update(T2 entityDto)
+        public Task RemoveAsync(Guid entityDtoId, CancellationToken cancellation) =>
+            repository.RemoveRecursivelyAsync(entityDtoId, cancellation);
+
+        public async Task<T2> UpdateAsync(T2 entityDto, CancellationToken cancellation)
         {
             var entity = mapper.Map<T1>(entityDto);
-            await repository.Update(entity);
-            return await GetByIdAsync(entity.Id);
+            await repository.UpdateRecursivelyAsync(entity, cancellation);
+            return await GetByIdAsync(entity.Id, cancellation);
         }
 
     }

@@ -4,14 +4,15 @@
     {
         public Guid Id { get; set; }
 
-        protected Entity()
-        {
-            Id = Guid.NewGuid();
-        }
+        public DateTime CreatedDate { get; set; }
+
+        public DateTime UpdatedDate { get; set; }
 
         public virtual void Validate()
         {
-            throw new NotImplementedException();
+            Validation.IsValidGuid(Id, "Id inválido");
+            Validation.IsValidDate(CreatedDate, "Data de criação inválida");
+            Validation.IsValidDate(UpdatedDate, "Data de atualização inválida");
         }
     }
 }

@@ -8,7 +8,9 @@ namespace CleanArch.Application.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<Client, ClientDto>().ReverseMap();
+            CreateMap<Address, AddressDto>().ReverseMap();
+            CreateMap<BankAccount, BankAccountDto>().ReverseMap();
         }
     }
 }

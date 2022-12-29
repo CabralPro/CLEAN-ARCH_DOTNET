@@ -6,9 +6,9 @@ using CleanArch.Domain.Interfaces;
 
 namespace CleanArch.Application.Services
 {
-    public class ProductService : BaseService<Product, ProductDto>, IProductService
+    public class ClientService : BaseService<Client, ClientDto>, IClientService
     {
-        public ProductService(IBaseRepository<Product> repository, IMapper mapper)
+        public ClientService(IBaseRepository<Client> repository, IMapper mapper)
             : base(repository, mapper)
         { }
     }

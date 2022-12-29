@@ -4,9 +4,9 @@ using CleanArch.Infra.Data.Context;
 
 namespace CleanArch.Infra.Data.Repositories
 {
-    public class ProductRepository : BaseRepository<Product>, IProductRepository
+    public class ClientRepository : BaseRepository<Client>, IClientRepository
     {
-        public ProductRepository(AppDbContext dbContext)
+        public ClientRepository(AppDbContext dbContext)
             : base(dbContext)
         { }
 

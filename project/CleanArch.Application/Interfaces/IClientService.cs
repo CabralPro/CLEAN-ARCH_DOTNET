@@ -2,6 +2,6 @@
 
 namespace CleanArch.Application.Interfaces
 {
-    public interface IProductService : IBaseService<ProductDto>
+    public interface IClientService : IBaseService<ClientDto>
     { }
 }

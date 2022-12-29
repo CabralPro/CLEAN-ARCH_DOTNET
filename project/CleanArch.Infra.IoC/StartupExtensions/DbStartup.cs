@@ -15,6 +15,8 @@ namespace CleanArch.Infra.IoC.StartupExtensions
                     configuration["SqliteConnection:SqliteConnectionString"],
                     b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
                 )
+                .UseLazyLoadingProxies()
+
             );
 
             return services;

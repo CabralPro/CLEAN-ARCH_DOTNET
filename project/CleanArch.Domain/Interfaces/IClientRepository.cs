@@ -2,6 +2,6 @@
 
 namespace CleanArch.Domain.Interfaces
 {
-    public interface IProductRepository : IBaseRepository<Product>
+    public interface IClientRepository : IBaseRepository<Client>
     { }
 }

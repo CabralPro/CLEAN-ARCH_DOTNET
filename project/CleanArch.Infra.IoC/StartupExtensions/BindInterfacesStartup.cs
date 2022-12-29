@@ -13,8 +13,8 @@ namespace CleanArch.Infra.IoC.StartupExtensions
         {
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IClientService, ClientService>();
 
             return services;
         }

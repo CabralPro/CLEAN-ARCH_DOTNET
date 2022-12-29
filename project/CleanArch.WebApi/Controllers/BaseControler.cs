@@ -1,4 +1,5 @@
-﻿using CleanArch.WebApi.Controllers.ResponseTypes;
+﻿using CleanArch.Domain.DomainObjects;
+using CleanArch.WebApi.Controllers.ResponseTypes;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 using System.Text.Json;
@@ -47,12 +48,23 @@ namespace CleanArch.WebApi.Controllers
         }
 
         [NonAction]
-        public ContentResult CreateResponse<T>(T obj) =>
+        public ContentResult CreatedResponse<T>(T obj) =>
             ContentResponse(obj, StatusCodes.Status201Created);
 
         [NonAction]
-        public ContentResult UpdateResponse<T>(T obj) =>
+        public ContentResult UpdatedResponse<T>(T obj) =>
             ContentResponse(obj, StatusCodes.Status200OK);
+
+        [NonAction]
+        public void ValidatePagination(int page, int size, int maxPageSize = 10)
+        {
+            if (page <= 0)
+                throw new DomainException("Parametro 'page' é inválido");
+            if (size <= 0)
+                throw new DomainException("Parametro 'size' é inválido");
+            if (size > maxPageSize)
+                throw new DomainException($"O parametro 'size' não pode ser maior que {maxPageSize}");
+        }
 
     }
 }
