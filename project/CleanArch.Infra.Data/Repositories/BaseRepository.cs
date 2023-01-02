@@ -36,6 +36,7 @@ namespace CleanArch.Infra.Data.Repositories
 
         public virtual async Task<T> GetByIdAsync(Guid entityId, CancellationToken cancellation)
         {
+            DbContext.ChangeTracker.Clear();
             var entity = await DbSet.FirstOrDefaultAsync(e => e.Id == entityId, cancellation);
 
             if (entity == null)
@@ -63,34 +64,10 @@ namespace CleanArch.Infra.Data.Repositories
             await DbContext.SaveChangesAsync(cancellation);
         }
 
-        public virtual async Task UpdateRecursivelyAsync(T entity, CancellationToken cancellation)
+        public virtual Task UpdateRecursivelyAsync(T entity, CancellationToken cancellation)
         {
-            var entityDb = await GetByIdAsync(entity.Id, cancellation);
-
-            if (entityDb == null)
-                throw new DomainException("Nenhuma entidade encontrada para o 'id' informado");
-
-            var targetList = new Dictionary<Guid, Entity>();
-            FillRecursiveEntityList(entityDb, targetList);
-
-            var sourceList = new Dictionary<Guid, Entity>();
-            FillRecursiveEntityList(entity, sourceList);
-
-            foreach (var item in sourceList)
-            {
-                var target = targetList.GetValueOrDefault(item.Key);
-                var source = item.Value;
-
-                if (target == null)
-                {
-                    DbSet.Add(entity);
-                    continue;
-                }
-
-                DbContext.Entry(target).CurrentValues.SetValues(source);
-            }
-
-            await DbContext.SaveChangesAsync(cancellation);
+            DbContext.Update(entity);
+            return DbContext.SaveChangesAsync(cancellation);
         }
 
         private void FillRecursiveEntityList(Entity entity, Dictionary<Guid, Entity> list)
