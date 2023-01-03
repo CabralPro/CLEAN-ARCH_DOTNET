@@ -8,7 +8,6 @@ namespace CleanArch.Infra.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Address> builder)
         {
-            builder.Property(p => p.Id).HasMaxLength(36).IsRequired().IsUnicode();
             builder.Property(p => p.Number).HasMaxLength(20).IsRequired();
             builder.Property(p => p.Street).HasMaxLength(200).IsRequired();
         }

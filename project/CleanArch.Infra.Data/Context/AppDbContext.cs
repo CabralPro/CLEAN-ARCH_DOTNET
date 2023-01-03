@@ -21,20 +21,20 @@ namespace CleanArch.Infra.Data.Context
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            UpdateEntityDates();
+            SetEntityDates();
             return base.SaveChangesAsync(cancellationToken);
         }
 
-        private void UpdateEntityDates()
+        private void SetEntityDates()
         {
             var entries = ChangeTracker.Entries()
-                .Where(e => e.Entity is Entity &&
+                .Where(e => e.Entity is EntityBase &&
                     (e.State == EntityState.Added ||
                      e.State == EntityState.Modified));
 
             foreach (var entry in entries)
             {
-                var entity = ((Entity)entry.Entity);
+                var entity = ((EntityBase)entry.Entity);
                 entity.UpdatedDate = DateTime.UtcNow;
 
                 switch (entry.State)
@@ -47,8 +47,6 @@ namespace CleanArch.Infra.Data.Context
                         entity.CreatedDate = DateTime.UtcNow;
                         break;
                 }
-
-                entity.Validate();
             }
         }
 

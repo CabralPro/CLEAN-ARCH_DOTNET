@@ -2,12 +2,11 @@
 using CleanArch.Domain.Interfaces;
 using CleanArch.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Collections;
 
 namespace CleanArch.Infra.Data.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T>
-            where T : Entity
+            where T : EntityBase
     {
         public readonly AppDbContext DbContext;
         public DbSet<T> DbSet { get => DbContext.Set<T>(); }
@@ -19,9 +18,6 @@ namespace CleanArch.Infra.Data.Repositories
 
         public virtual async Task AddAsync(T entity, CancellationToken cancellation)
         {
-            if (entity.Id != Guid.Empty && await ExistAsync(entity.Id, cancellation))
-                throw new DomainException("Já existe uma entidade para o 'id' informado");
-
             DbSet.Add(entity);
             await DbContext.SaveChangesAsync(cancellation);
         }
@@ -37,6 +33,7 @@ namespace CleanArch.Infra.Data.Repositories
         public virtual async Task<T> GetByIdAsync(Guid entityId, CancellationToken cancellation)
         {
             DbContext.ChangeTracker.Clear();
+
             var entity = await DbSet.FirstOrDefaultAsync(e => e.Id == entityId, cancellation);
 
             if (entity == null)
@@ -51,54 +48,17 @@ namespace CleanArch.Infra.Data.Repositories
         public virtual Task<int> CountAsync(CancellationToken cancellation) =>
             DbSet.CountAsync(cancellation);
 
-        public virtual async Task RemoveRecursivelyAsync(Guid entityId, CancellationToken cancellation)
+        public virtual async Task RemoveAsync(Guid entityId, CancellationToken cancellation)
         {
             var entity = await GetByIdAsync(entityId, cancellation);
-            var entityList = new Dictionary<Guid, Entity>();
-
-            FillRecursiveEntityList(entity, entityList);
-
-            foreach (var item in entityList)
-                DbContext.Entry(item.Value).State = EntityState.Deleted;
-
+            DbContext.Remove(entity);
             await DbContext.SaveChangesAsync(cancellation);
         }
 
-        public virtual Task UpdateRecursivelyAsync(T entity, CancellationToken cancellation)
+        public virtual Task UpdateAsync(T entity, CancellationToken cancellation)
         {
             DbContext.Update(entity);
             return DbContext.SaveChangesAsync(cancellation);
-        }
-
-        private void FillRecursiveEntityList(Entity entity, Dictionary<Guid, Entity> list)
-        {
-            // Retorna propriedades assinaveis para 'Entity' ou 'IList<Entity>'
-            var props = entity.GetType().GetProperties()
-                .Where(p =>
-                   p.PropertyType.IsAssignableTo(typeof(Entity)) ||
-                   p.PropertyType.GetGenericArguments()?.FirstOrDefault()?.BaseType == typeof(Entity));
-
-            foreach (var prop in props)
-            {
-                if (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(IList<>))
-                {
-                    var entityList = (IList)entity.GetType().GetProperty(prop.Name).GetValue(entity);
-
-                    foreach (var item in entityList)
-                        FillRecursiveEntityList((Entity)item, list);
-
-                    continue;
-                }
-
-                var entrieEntity = (Entity)entity.GetType().GetProperty(prop.Name).GetValue(entity);
-
-                if (entrieEntity == null)
-                    continue;
-
-                FillRecursiveEntityList(entrieEntity, list);
-            }
-
-            list.Add(entity.Id, entity);
         }
 
     }

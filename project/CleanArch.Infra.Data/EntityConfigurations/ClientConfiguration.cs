@@ -8,7 +8,6 @@ namespace CleanArch.Infra.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Client> builder)
         {
-            builder.Property(p => p.Id).HasMaxLength(36).IsRequired().IsUnicode();
             builder.Property(p => p.Name).HasMaxLength(100).IsRequired();
         }
     }

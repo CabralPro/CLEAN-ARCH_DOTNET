@@ -3,7 +3,7 @@ using CleanArch.Domain.DomainObjects;
 
 namespace CleanArch.Application.Interfaces
 {
-    public interface IBaseService<T> where T : Dto
+    public interface IBaseService<T> where T : DtoBase
     {
         Task<List<T>> ListAsync(int page, int size, CancellationToken cancellation);
         Task<int> CountAsync(CancellationToken cancellation);

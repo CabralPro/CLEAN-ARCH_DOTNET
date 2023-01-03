@@ -15,14 +15,19 @@ namespace CleanArch.Infra.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.0-rc.1.22426.7");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true);
 
             modelBuilder.Entity("CleanArch.Domain.Entities.Address", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(36)
-                        .IsUnicode(true)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ClientId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
@@ -43,6 +48,9 @@ namespace CleanArch.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClientId")
+                        .IsUnique();
+
                     b.ToTable("Address");
                 });
 
@@ -50,8 +58,6 @@ namespace CleanArch.Infra.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(36)
-                        .IsUnicode(true)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("AccountData")
@@ -59,7 +65,7 @@ namespace CleanArch.Infra.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ClientId")
+                    b.Property<Guid>("ClientId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
@@ -79,11 +85,6 @@ namespace CleanArch.Infra.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(36)
-                        .IsUnicode(true)
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("BusinessAddressId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
@@ -94,49 +95,37 @@ namespace CleanArch.Infra.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("ResidentialAddressId")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BusinessAddressId");
-
-                    b.HasIndex("ResidentialAddressId");
-
                     b.ToTable("Client");
+                });
+
+            modelBuilder.Entity("CleanArch.Domain.Entities.Address", b =>
+                {
+                    b.HasOne("CleanArch.Domain.Entities.Client", null)
+                        .WithOne("Address")
+                        .HasForeignKey("CleanArch.Domain.Entities.Address", "ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CleanArch.Domain.Entities.BankAccount", b =>
                 {
                     b.HasOne("CleanArch.Domain.Entities.Client", null)
                         .WithMany("BankAccounts")
-                        .HasForeignKey("ClientId");
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CleanArch.Domain.Entities.Client", b =>
                 {
-                    b.HasOne("CleanArch.Domain.Entities.Address", "BusinessAddress")
-                        .WithMany()
-                        .HasForeignKey("BusinessAddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.Navigation("Address")
                         .IsRequired();
 
-                    b.HasOne("CleanArch.Domain.Entities.Address", "ResidentialAddress")
-                        .WithMany()
-                        .HasForeignKey("ResidentialAddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BusinessAddress");
-
-                    b.Navigation("ResidentialAddress");
-                });
-
-            modelBuilder.Entity("CleanArch.Domain.Entities.Client", b =>
-                {
                     b.Navigation("BankAccounts");
                 });
 #pragma warning restore 612, 618

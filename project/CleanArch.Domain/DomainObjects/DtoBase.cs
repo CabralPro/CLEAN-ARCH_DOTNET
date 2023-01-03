@@ -1,6 +1,6 @@
 ﻿
 namespace CleanArch.Domain.DomainObjects
 {
-    public abstract class Dto
+    public abstract class DtoBase
     { }
 }

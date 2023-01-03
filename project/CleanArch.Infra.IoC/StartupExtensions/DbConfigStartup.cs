@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CleanArch.Infra.IoC.StartupExtensions
 {
-    public static class DbStartup
+    public static class DbConfigStartup
     {
         public static IServiceCollection AddDbConfigs(this IServiceCollection services,
             IConfiguration configuration)

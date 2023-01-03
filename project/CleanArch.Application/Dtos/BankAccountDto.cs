@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace CleanArch.Application.Dtos
 {
-    public class BankAccountDto : Dto
+    public class BankAccountDto : DtoBase
     {
         [JsonPropertyName("id")]
         public Guid Id { get; set; }

@@ -11,8 +11,9 @@ namespace CleanArch.WebApi.Middlewares
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionHandlerMiddleware> _logger;
 
-        public ExceptionHandlerMiddleware(RequestDelegate next, 
-            ILogger<ExceptionHandlerMiddleware> logger){
+        public ExceptionHandlerMiddleware(RequestDelegate next,
+            ILogger<ExceptionHandlerMiddleware> logger)
+        {
             _next = next;
             _logger = logger;
         }
@@ -28,20 +29,25 @@ namespace CleanArch.WebApi.Middlewares
             catch (Exception ex)
             {
                 _logger.LogError($"Message: {ex.Message}; InnerExeption : {ex.InnerException}, StackTrace: {ex.StackTrace}");
-                await ConvertException(context, ex);
+                await HandleResponse(context, ex);
             }
         }
 
-        public Task ConvertException(HttpContext context, Exception ex)
+        public Task HandleResponse(HttpContext context, Exception ex)
         {
             context.Response.StatusCode = ex is DomainException ?
                 StatusCodes.Status400BadRequest :
                 StatusCodes.Status500InternalServerError;
 
+            var canReturnErrorMsg = ex is DomainException 
+                || ex.InnerException?.Source == "FluentValidation"
+                || ex.Source == "Microsoft.EntityFrameworkCore.Relational";
+
             var responseObj = new ErrorResponseType
             {
-                Error = ex.InnerException?.Message ?? ex.Message
-                //error = ex is DomainException ? ex.Message : "Internal error"
+                Error = canReturnErrorMsg ?
+                    (ex.InnerException?.Message ?? ex.Message) :
+                    "Internal error"
             };
             var resultContent = JsonSerializer.Serialize(responseObj);
 

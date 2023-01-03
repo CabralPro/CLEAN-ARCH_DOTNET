@@ -7,8 +7,8 @@ using CleanArch.Domain.Interfaces;
 namespace CleanArch.Application.Services
 {
     public abstract class BaseService<T1, T2> : IBaseService<T2>
-        where T1 : Entity
-        where T2 : Dto
+        where T1 : EntityBase
+        where T2 : DtoBase
     {
 
         public readonly IBaseRepository<T1> repository;
@@ -45,12 +45,12 @@ namespace CleanArch.Application.Services
         }
 
         public Task RemoveAsync(Guid entityDtoId, CancellationToken cancellation) =>
-            repository.RemoveRecursivelyAsync(entityDtoId, cancellation);
+            repository.RemoveAsync(entityDtoId, cancellation);
 
         public async Task<T2> UpdateAsync(T2 entityDto, CancellationToken cancellation)
         {
             var entity = mapper.Map<T1>(entityDto);
-            await repository.UpdateRecursivelyAsync(entity, cancellation);
+            await repository.UpdateAsync(entity, cancellation);
             return await GetByIdAsync(entity.Id, cancellation);
         }
 
