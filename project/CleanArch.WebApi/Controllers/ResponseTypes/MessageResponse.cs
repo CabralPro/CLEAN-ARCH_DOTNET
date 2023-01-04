@@ -2,7 +2,7 @@
 
 namespace CleanArch.WebApi.Controllers.ResponseTypes
 {
-    public class MessageResponseType
+    public class MessageResponse
     {
         [JsonPropertyName("message")]
         public string Message { get; set; }
