@@ -1,6 +1,5 @@
 ﻿
 using CleanArch.Domain.DomainObjects;
-using FluentValidation;
 
 namespace CleanArch.Domain.Entities
 {
@@ -19,23 +18,8 @@ namespace CleanArch.Domain.Entities
         {
             Street = street;
             Number = number;
-            Validate();
         }
 
-        public override void Validate()
-        {
-            new AddressValidator().ValidateAndThrow(this);
-        }
-
-    }
-
-    public class AddressValidator : AbstractValidator<Address>
-    {
-        public AddressValidator()
-        {
-            RuleFor(x => x.Street).NotEmpty();
-            RuleFor(x => x.Number).NotEmpty();
-        }
     }
 
 }

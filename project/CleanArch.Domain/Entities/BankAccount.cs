@@ -1,6 +1,5 @@
 ﻿
 using CleanArch.Domain.DomainObjects;
-using FluentValidation;
 
 namespace CleanArch.Domain.Entities
 {
@@ -17,22 +16,8 @@ namespace CleanArch.Domain.Entities
         public BankAccount(string accountData)
         {
             AccountData = accountData;
-            Validate();
         }
 
-        public override void Validate()
-        {
-            new BankAccountValidator().ValidateAndThrow(this);
-        }
-
-    }
-
-    public class BankAccountValidator : AbstractValidator<BankAccount>
-    {
-        public BankAccountValidator()
-        {
-            RuleFor(x => x.AccountData).NotEmpty();
-        }
     }
 
 }

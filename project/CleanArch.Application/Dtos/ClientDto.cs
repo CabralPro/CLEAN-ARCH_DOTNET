@@ -1,14 +1,12 @@
 ﻿
 using CleanArch.Domain.DomainObjects;
+using FluentValidation;
 using System.Text.Json.Serialization;
 
 namespace CleanArch.Application.Dtos
 {
     public class ClientDto : DtoBase
     {
-        [JsonPropertyName("id")]
-        public Guid Id { get; set; }
-
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
@@ -17,5 +15,28 @@ namespace CleanArch.Application.Dtos
 
         [JsonPropertyName("bankAccounts")]
         public IList<BankAccountDto> BankAccounts { get; set; }
+
+        public ClientDto(string name, AddressDto address, IList<BankAccountDto> bankAccounts)
+        {
+            Name = name;
+            Address = address;
+            BankAccounts = bankAccounts;
+            Validate();
+        }
+
+        public override void Validate()
+        {
+            new ClientDtoValidator().ValidateAndThrow(this);
+        }
+    }
+
+    public class ClientDtoValidator : AbstractValidator<ClientDto>
+    {
+        public ClientDtoValidator()
+        {
+            RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.Address).NotEmpty();
+            RuleFor(x => x.BankAccounts).NotEmpty();
+        }
     }
 }
