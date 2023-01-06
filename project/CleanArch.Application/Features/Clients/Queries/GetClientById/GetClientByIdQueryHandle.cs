@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
+using CleanArch.Application.BaseMediator.Queries.BaseGetById;
 using CleanArch.Application.Dtos;
-using CleanArch.Application.Features.BaseCrud.Queries.GetEntityById;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces;
 
 namespace CleanArch.Application.Features.Clients.Queries.GetClientById
 {
-    public class GetClientByIdQueryHandler : GetEntityByIdQueryHandler<Client, ClientDto>
+    public class GetClientByIdQueryHandle : BaseGetByIdQueryHandler<Client, ClientDto>
     {
-        public GetClientByIdQueryHandler(
+        public GetClientByIdQueryHandle(
             IClientRepository repository,
             IMapper mapper)
             : base(repository, mapper)

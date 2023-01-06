@@ -1,14 +1,14 @@
 ﻿using CleanArch.Domain.DomainObjects;
 using MediatR;
 
-namespace CleanArch.Application.Features.BaseCrud.Queries.GetEntityById
+namespace CleanArch.Application.BaseMediator.Queries.BaseGetById
 {
-    public class GetEntityByIdQuery<T> : IRequest<T>
+    public class BaseGetByIdQuery<T> : IRequest<T>
         where T : DtoBase
     {
         public Guid EntityId { get; private set; }
 
-        public GetEntityByIdQuery(Guid entityId)
+        public BaseGetByIdQuery(Guid entityId)
         {
             EntityId = entityId;
         }

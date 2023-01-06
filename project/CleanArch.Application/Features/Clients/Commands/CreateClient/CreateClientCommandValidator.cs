@@ -1,9 +1,9 @@
-﻿using CleanArch.Application.Features.BaseCrud.Commands.CreateEntity;
-using CleanArch.Domain.Entities;
+﻿using CleanArch.Application.BaseMediator.Commands.BaseCreate;
+using CleanArch.Application.Dtos;
 
 namespace CleanArch.Application.Features.Clients.Commands.CreateClient
 {
-    public class CreateClientCommandValidator : CreateEntityCommandValidator<Client>
+    public class CreateClientCommandValidator : BaseCreateCommandValidator<ClientDto>
     {
         public CreateClientCommandValidator()
         {

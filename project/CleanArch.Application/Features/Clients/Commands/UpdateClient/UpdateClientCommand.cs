@@ -1,12 +1,12 @@
-﻿using CleanArch.Application.Features.BaseCrud.Commands.UpdateEntity;
-using CleanArch.Domain.Entities;
+﻿using CleanArch.Application.BaseMediator.Commands.BaseUpdate;
+using CleanArch.Application.Dtos;
 
 namespace CleanArch.Application.Features.Clients.Commands.UpdateClient
 {
-    public class UpdateClientCommand : UpdateEntityCommand<Client>
+    public class UpdateClientCommand : BaseUpdateCommand<ClientDto>
     {
-        public UpdateClientCommand(Client entity)
-            : base(entity)
+        public UpdateClientCommand(ClientDto dto)
+            : base(dto)
         { }
     }
 }

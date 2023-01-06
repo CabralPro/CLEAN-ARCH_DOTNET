@@ -2,11 +2,11 @@ using AutoMapper;
 using CleanArch.Application.Dtos;
 using CleanArch.Application.Features.Clients.Commands.CreateClient;
 using CleanArch.Application.Features.Clients.Commands.DeleteClient;
+using CleanArch.Application.Features.Clients.Commands.RemoveInternalDeletedEntitiesClient;
 using CleanArch.Application.Features.Clients.Commands.UpdateClient;
 using CleanArch.Application.Features.Clients.Queries.GetClientById;
 using CleanArch.Application.Features.Clients.Queries.GetClientList;
 using CleanArch.Application.ServiceBus;
-using CleanArch.Domain.Entities;
 using CleanArch.WebApi.Controllers.ResponseTypes;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,22 +34,19 @@ namespace CleanArch.WebApi.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<ClientDto>> Post([FromBody] ClientDto ClientDto, CancellationToken cancellation)
+        public async Task<ActionResult<ClientDto>> Post([FromBody] ClientDto clientDto, CancellationToken cancellation)
         {
-            var client = Mapper.Map<Client>(ClientDto);
-            var clientId = await ServiceBus.Send(new CreateClientCommand(client), cancellation);
-            var createdClient = await ServiceBus.Send(new GetClientByIdQuery(clientId), cancellation);
-            return CreatedResponse(createdClient);
+            var client = await ServiceBus.Send(new CreateClientCommand(clientDto), cancellation);
+            return CreatedResponse(client);
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ClientDto>> Put([FromBody] ClientDto ClientDto, CancellationToken cancellation)
+        public async Task<ActionResult<ClientDto>> Put([FromBody] ClientDto clientDto, CancellationToken cancellation)
         {
-            var client = Mapper.Map<Client>(ClientDto);
-            await ServiceBus.Send(new UpdateClientCommand(client), cancellation);
-            var updatedClient = await ServiceBus.Send(new GetClientByIdQuery(client.Id), cancellation);
-            return UpdatedResponse(updatedClient);
+            var trackedItem = await ServiceBus.Send(new UpdateClientCommand(clientDto), cancellation);
+            var updatedItem = await ServiceBus.Send(new RemoveInternalDeletedEntitiesClientCommand(trackedItem), cancellation);
+            return UpdatedResponse(updatedItem);
         }
 
         [HttpDelete]

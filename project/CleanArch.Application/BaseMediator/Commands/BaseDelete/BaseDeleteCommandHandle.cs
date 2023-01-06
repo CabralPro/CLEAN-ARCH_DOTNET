@@ -2,19 +2,19 @@
 using CleanArch.Domain.Interfaces;
 using MediatR;
 
-namespace CleanArch.Application.Features.BaseCrud.Commands.DeleteEntity
+namespace CleanArch.Application.BaseMediator.Commands.BaseDelete
 {
-    public class DeleteEntityCommandHandle<T> : IRequestHandler<DeleteEntityCommand<T>>
+    public class BaseDeleteCommandHandle<T> : IRequestHandler<BaseDeleteCommand<T>>
             where T : EntityBase
     {
         private readonly IBaseRepository<T> _repository;
 
-        public DeleteEntityCommandHandle(IBaseRepository<T> repository)
+        public BaseDeleteCommandHandle(IBaseRepository<T> repository)
         {
             _repository = repository;
         }
 
-        public async Task<Unit> Handle(DeleteEntityCommand<T> request, CancellationToken cancellationToken)
+        public virtual async Task<Unit> Handle(BaseDeleteCommand<T> request, CancellationToken cancellationToken)
         {
             await _repository.RemoveAsync(request.EntityId, cancellationToken);
             return Unit.Value;

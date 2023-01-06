@@ -1,9 +1,9 @@
-﻿using CleanArch.Application.Dtos;
-using CleanArch.Application.Features.BaseCrud.Queries.GetEntityById;
+﻿using CleanArch.Application.BaseMediator.Queries.BaseGetById;
+using CleanArch.Application.Dtos;
 
 namespace CleanArch.Application.Features.Clients.Queries.GetClientById
 {
-    public class GetClientByIdQuery : GetEntityByIdQuery<ClientDto>
+    public class GetClientByIdQuery : BaseGetByIdQuery<ClientDto>
     {
         public GetClientByIdQuery(Guid entityId)
             : base(entityId)

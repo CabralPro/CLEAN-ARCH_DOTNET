@@ -1,11 +1,11 @@
-﻿using CleanArch.Application.Features.BaseCrud.Commands.CreateEntity;
-using CleanArch.Domain.Entities;
+﻿using CleanArch.Application.BaseMediator.Commands.BaseCreate;
+using CleanArch.Application.Dtos;
 
 namespace CleanArch.Application.Features.Clients.Commands.CreateClient
 {
-    public class CreateClientCommand : CreateEntityCommand<Client>
+    public class CreateClientCommand : BaseCreateCommand<ClientDto>
     {
-        public CreateClientCommand(Client entity)
+        public CreateClientCommand(ClientDto entity)
             : base(entity)
         { }
     }
