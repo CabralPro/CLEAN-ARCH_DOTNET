@@ -1,16 +1,12 @@
-﻿using FluentValidation;
-using MediatR;
+﻿using CleanArch.Application.Features.BaseCrud.Commands.DeleteEntity;
+using CleanArch.Domain.Entities;
 
 namespace CleanArch.Application.Features.Clients.Commands.DeleteClient
 {
-    public class DeleteClientCommand : IRequest
+    public class DeleteClientCommand : DeleteEntityCommand<Client>
     {
-        public Guid ClientId { get; private set; }
-
-        public DeleteClientCommand(Guid clientId)
-        {
-            ClientId = clientId;
-            new DeleteClientCommandValidator().ValidateAndThrow(this);
-        }
+        public DeleteClientCommand(Guid entityId)
+            : base(entityId)
+        { }
     }
 }

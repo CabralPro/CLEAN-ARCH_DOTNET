@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CleanArch.Application.ServiceBus;
 using CleanArch.Domain.DomainObjects;
 using CleanArch.WebApi.Controllers.ResponseTypes;
 using MediatR;
@@ -17,13 +18,13 @@ namespace CleanArch.WebApi.Controllers
     {
         protected readonly ILogger Logger;
         protected readonly IMapper Mapper;
-        protected readonly IMediator Mediator;
+        protected readonly IServiceBus ServiceBus;
 
-        protected BaseController(ILogger logger, IMapper mapper, IMediator mediator)
+        protected BaseController(ILogger logger, IMapper mapper, IServiceBus serviceBus)
         {
             Logger = logger;
             Mapper = mapper;
-            Mediator = mediator;
+            ServiceBus = serviceBus;
         }
 
         [NonAction]

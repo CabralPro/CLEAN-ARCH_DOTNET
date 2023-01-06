@@ -1,21 +1,13 @@
-﻿using CleanArch.Domain.Interfaces;
-using MediatR;
+﻿using CleanArch.Application.Features.BaseCrud.Commands.CreateEntity;
+using CleanArch.Domain.Entities;
+using CleanArch.Domain.Interfaces;
 
 namespace CleanArch.Application.Features.Clients.Commands.CreateClient
 {
-    public class CreateClientCommandHandle : IRequestHandler<CreateClientCommand, Guid>
+    public class CreateClientCommandHandle : CreateEntityCommandHandle<Client>
     {
-        private readonly IClientRepository _clientRepository;
-
-        public CreateClientCommandHandle(IClientRepository clientRepository)
-        {
-            _clientRepository = clientRepository;
-        }
-
-        public async Task<Guid> Handle(CreateClientCommand request, CancellationToken cancellationToken)
-        {
-            await _clientRepository.AddAsync(request.Cliente, cancellationToken);
-            return request.Cliente.Id;
-        }
+        public CreateClientCommandHandle(IClientRepository repository)
+            : base(repository)
+        { }
     }
 }

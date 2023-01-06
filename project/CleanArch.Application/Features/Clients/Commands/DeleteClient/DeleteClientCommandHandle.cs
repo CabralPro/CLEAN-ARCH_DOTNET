@@ -1,22 +1,14 @@
 ﻿
+using CleanArch.Application.Features.BaseCrud.Commands.DeleteEntity;
+using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces;
-using MediatR;
 
 namespace CleanArch.Application.Features.Clients.Commands.DeleteClient
 {
-    public class DeleteClientCommandHandle : IRequestHandler<DeleteClientCommand>
+    public class DeleteClientCommandHandle : DeleteEntityCommandHandle<Client>
     {
-        private readonly IClientRepository _clientRepository;
-
-        public DeleteClientCommandHandle(IClientRepository clientRepository)
-        {
-            _clientRepository = clientRepository;
-        }
-
-        public async Task<Unit> Handle(DeleteClientCommand request, CancellationToken cancellationToken)
-        {
-            await _clientRepository.RemoveAsync(request.ClientId, cancellationToken);
-            return Unit.Value;
-        }
+        public DeleteClientCommandHandle(IClientRepository repository)
+            : base(repository)
+        { }
     }
 }

@@ -1,17 +1,12 @@
 ﻿using CleanArch.Application.Dtos;
-using MediatR;
+using CleanArch.Application.Features.BaseCrud.Queries.GetEntityList;
 
 namespace CleanArch.Application.Features.Clients.Queries.GetClientList
 {
-    public class GetClientListQuery : IRequest<(IEnumerable<ClientDto>, int)>
+    public class GetClientListQuery : GetEntityListQuery<ClientDto>
     {
-        public int Page { get; private set; }
-        public int Size { get; private set; }
-
         public GetClientListQuery(int page, int size)
-        {
-            Page = page;
-            Size = size;
-        }
+            : base(page, size)
+        { }
     }
 }

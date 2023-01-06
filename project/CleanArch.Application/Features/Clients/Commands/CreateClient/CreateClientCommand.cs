@@ -1,17 +1,12 @@
-﻿using CleanArch.Domain.Entities;
-using FluentValidation;
-using MediatR;
+﻿using CleanArch.Application.Features.BaseCrud.Commands.CreateEntity;
+using CleanArch.Domain.Entities;
 
 namespace CleanArch.Application.Features.Clients.Commands.CreateClient
 {
-    public class CreateClientCommand : IRequest<Guid>
+    public class CreateClientCommand : CreateEntityCommand<Client>
     {
-        public Client Cliente { get; private set; }
-
-        public CreateClientCommand(Client cliente)
-        {
-            Cliente = cliente;
-            new CreateClientCommandValidator().ValidateAndThrow(this);
-        }
+        public CreateClientCommand(Client entity)
+            : base(entity)
+        { }
     }
 }

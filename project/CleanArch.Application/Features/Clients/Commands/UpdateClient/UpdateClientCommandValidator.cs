@@ -1,12 +1,13 @@
-﻿using FluentValidation;
+﻿using CleanArch.Application.Features.BaseCrud.Commands.UpdateEntity;
+using CleanArch.Domain.Entities;
 
 namespace CleanArch.Application.Features.Clients.Commands.UpdateClient
 {
-    public class UpdateClientCommandValidator : AbstractValidator<UpdateClientCommand>
+    public class UpdateClientCommandValidator : UpdateEntityCommandValidator<Client>
     {
         public UpdateClientCommandValidator()
         {
-            // MY COMMAND VALIDATIONS
+            // MY VALIDATIONS
         }
     }
 }

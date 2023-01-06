@@ -1,18 +1,12 @@
-﻿using CleanArch.Application.Features.Clients.Commands.CreateClient;
+﻿using CleanArch.Application.Features.BaseCrud.Commands.UpdateEntity;
 using CleanArch.Domain.Entities;
-using FluentValidation;
-using MediatR;
 
 namespace CleanArch.Application.Features.Clients.Commands.UpdateClient
 {
-    public class UpdateClientCommand : IRequest
+    public class UpdateClientCommand : UpdateEntityCommand<Client>
     {
-        public Client Cliente { get; private set; }
-
-        public UpdateClientCommand(Client cliente)
-        {
-            Cliente = cliente;
-            new UpdateClientCommandValidator().ValidateAndThrow(this);
-        }
+        public UpdateClientCommand(Client entity)
+            : base(entity)
+        { }
     }
 }
