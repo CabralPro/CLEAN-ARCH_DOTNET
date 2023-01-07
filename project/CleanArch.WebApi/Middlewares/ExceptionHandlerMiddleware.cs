@@ -38,7 +38,7 @@ namespace CleanArch.WebApi.Middlewares
                 StatusCodes.Status400BadRequest :
                 StatusCodes.Status500InternalServerError;
 
-            var canReturnErrorMsg = ex is DomainException 
+            var canReturnErrorMsg = ex is DomainException
                 || ex.InnerException?.Source == "FluentValidation"
                 || ex.Source == "FluentValidation"
                 || ex.Source == "Microsoft.EntityFrameworkCore.Relational";

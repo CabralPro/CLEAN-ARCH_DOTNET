@@ -1,5 +1,4 @@
-﻿using CleanArch.Application.BaseMediatR.Commands.BaseDelete;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 
 namespace CleanArch.Application.BaseMediator.Commands.BaseDelete

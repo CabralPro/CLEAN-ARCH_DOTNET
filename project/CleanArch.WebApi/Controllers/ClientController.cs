@@ -16,7 +16,7 @@ namespace CleanArch.WebApi.Controllers
     [Route("client")]
     public class ClientController : BaseController
     {
-        
+
         public ClientController(
             ILogger<ClientController> logger,
             IMapper mapper,

@@ -2,7 +2,6 @@
 using CleanArch.Application.ServiceBus;
 using CleanArch.Domain.DomainObjects;
 using CleanArch.WebApi.Controllers.ResponseTypes;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 using System.Text.Json;

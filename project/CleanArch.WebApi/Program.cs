@@ -10,7 +10,7 @@ namespace CleanArch.WebApi
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(builder =>
                     builder.UseStartup<Startup>()
-                    .ConfigureKestrel(opt => 
+                    .ConfigureKestrel(opt =>
                         opt.ConfigureEndpointDefaults(config =>
                             config.Protocols = HttpProtocols.Http1)))
                 .Build()

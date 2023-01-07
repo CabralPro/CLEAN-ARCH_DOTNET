@@ -1,5 +1,4 @@
-﻿using CleanArch.Application.BaseMediatR.Commands.BaseDelete;
-using CleanArch.Domain.DomainObjects;
+﻿using CleanArch.Domain.DomainObjects;
 using FluentValidation;
 using MediatR;
 
