@@ -5,27 +5,26 @@ using MediatR;
 
 namespace CleanArch.Application.BaseMediator.Commands.BaseCreate
 {
-    public class BaseCreateCommandHandle<T1, T2> : IRequestHandler<BaseCreateCommand<T2>, T2>
-        where T1 : EntityBase
-        where T2 : DtoBase
+    public class BaseCreateCommandHandle<TEntity, Tcommand, TResponse> : IRequestHandler<Tcommand, TResponse>
+        where TEntity : EntityBase
+        where Tcommand : BaseCreateCommand<TResponse>
     {
-        public readonly IBaseRepository<T1> Repository;
+        public readonly IBaseRepository<TEntity> Repository;
         public readonly IMapper Mapper;
 
         public BaseCreateCommandHandle(
-            IBaseRepository<T1> repository,
+            IBaseRepository<TEntity> repository,
             IMapper mapper)
         {
             Repository = repository;
             Mapper = mapper;
         }
 
-        public virtual async Task<T2> Handle(BaseCreateCommand<T2> request, CancellationToken cancellationToken)
+        public virtual async Task<TResponse> Handle(Tcommand request, CancellationToken cancellationToken)
         {
-            var entity = Mapper.Map<T1>(request.Dto);
+            var entity = Mapper.Map<TEntity>(request.Dto);
             var updatedEntity = await Repository.AddAsync(entity, cancellationToken);
-            return Mapper.Map<T2>(updatedEntity);
+            return Mapper.Map<TResponse>(updatedEntity);
         }
-
     }
 }

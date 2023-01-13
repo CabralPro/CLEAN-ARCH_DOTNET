@@ -16,7 +16,7 @@ namespace CleanArch.WebApi.StartupExtensions
             /* CLIENT REGISTERS */
             services.AddTransient<IRequestHandler<GetClientByIdQuery, ClientDto>, GetClientByIdQueryHandle>();
             services.AddTransient<IRequestHandler<GetClientListQuery, (IEnumerable<ClientDto>, int)>, GetClientListQueryHandle>();
-            services.AddTransient<IRequestHandler<CreateClientCommand, ClientDto>, CreateClientCommandHandle>();
+            //services.AddTransient<IRequestHandler<CreateClientCommand, ClientDto>, CreateClientCommandHandle>();
             services.AddTransient<IRequestHandler<DeleteClientCommand, Unit>, DeleteClientCommandHandle>();
             services.AddTransient<IRequestHandler<UpdateClientCommand, ClientDto>, UpdateClientCommandHandle>();
             services.AddTransient<IRequestHandler<RemoveInternalDeletedEntitiesClientCommand, ClientDto>, RemoveInternalDeletedEntitiesClientCommandHandle>();

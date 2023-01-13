@@ -6,7 +6,7 @@ using CleanArch.Domain.Interfaces;
 
 namespace CleanArch.Application.Features.Clients.Commands.CreateClient
 {
-    public class CreateClientCommandHandle : BaseCreateCommandHandle<Client, ClientDto>
+    public class CreateClientCommandHandle : BaseCreateCommandHandle<Client, CreateClientCommand, ClientDto>
     {
         public CreateClientCommandHandle(
             IClientRepository repository,
