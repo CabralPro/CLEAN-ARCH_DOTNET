@@ -35,7 +35,7 @@ namespace CleanArch.Infra.Data.Context
             foreach (var entry in entries)
             {
                 var entity = ((EntityBase)entry.Entity);
-                entity.UpdatedDate = DateTime.UtcNow;
+                entity.SetUpdatedDate(DateTime.UtcNow);
 
                 switch (entry.State)
                 {
@@ -44,7 +44,7 @@ namespace CleanArch.Infra.Data.Context
                         entry.Property(nameof(entity.CreatedDate)).IsModified = false;
                         break;
                     case EntityState.Added:
-                        entity.CreatedDate = DateTime.UtcNow;
+                        entity.SetCreatedDate(DateTime.UtcNow);
                         break;
                 }
             }

@@ -20,8 +20,6 @@ namespace CleanArch.WebApi.Middlewares
 
         public async Task Invoke(HttpContext context)
         {
-            context.Response.ContentType = MediaTypeNames.Application.Json;
-
             try
             {
                 await _next(context);
@@ -35,17 +33,19 @@ namespace CleanArch.WebApi.Middlewares
 
         public Task HandleResponse(HttpContext context, Exception ex)
         {
+            context.Response.ContentType = MediaTypeNames.Application.Json;
             context.Response.StatusCode = ex is DomainException ?
                 StatusCodes.Status400BadRequest :
                 StatusCodes.Status500InternalServerError;
 
-            var canReturnErrorMsg = ex is DomainException 
+            var canReturnErrorMsg = ex is DomainException
                 || ex.InnerException?.Source == "FluentValidation"
+                || ex.Source == "FluentValidation"
                 || ex.Source == "Microsoft.EntityFrameworkCore.Relational";
 
-            var responseObj = new ErrorResponseType
+            var responseObj = new MessageResponse
             {
-                Error = canReturnErrorMsg ?
+                Message = canReturnErrorMsg ?
                     (ex.InnerException?.Message ?? ex.Message) :
                     "Internal error"
             };

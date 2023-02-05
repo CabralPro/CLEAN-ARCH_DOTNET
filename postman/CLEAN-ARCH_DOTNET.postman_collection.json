@@ -1,0 +1,218 @@
+{
+	"info": {
+		"_postman_id": "de092a97-59ac-4bfe-b1e5-113c7be0b0ca",
+		"name": "CLEAN-ARCH_DOTNET",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "Post",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{passwordAuth}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{usernameAuth}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "l78dd2f49f343f4916953c475569cf071d",
+								"type": "default"
+							},
+							{
+								"key": "x-bs2-correlation-id",
+								"value": "346f76a5-b8ef-4e57-b2e6-2d286d207d29",
+								"type": "default"
+							},
+							{
+								"key": "x-bs2-who-calls",
+								"value": "teste",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Testeeee\",\r\n  \"address\": {\r\n    \"street\": \"streeet 2\",\r\n    \"number\": \"200A\"\r\n  },\r\n  \"bankAccounts\": [\r\n    {\r\n      \"accountData\": \"conta:2002;agencia:123\"\r\n    },\r\n    {\r\n      \"accountData\": \"conta:5000;agencia:456\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7075/client",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7075",
+							"path": [
+								"client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7075/client?id=f6b91a32-0d5e-488b-9c4b-fd49b8c217a9",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7075",
+							"path": [
+								"client"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "f6b91a32-0d5e-488b-9c4b-fd49b8c217a9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7075/client?id=e85cdd28-08a1-4003-a276-05d512a5ccfd",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7075",
+							"path": [
+								"client"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "e85cdd28-08a1-4003-a276-05d512a5ccfd"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{passwordAuth}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{usernameAuth}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "l78dd2f49f343f4916953c475569cf071d",
+								"type": "default"
+							},
+							{
+								"key": "x-bs2-correlation-id",
+								"value": "346f76a5-b8ef-4e57-b2e6-2d286d207d29",
+								"type": "default"
+							},
+							{
+								"key": "x-bs2-who-calls",
+								"value": "teste",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"e85cdd28-08a1-4003-a276-05d512a5ccfd\",\r\n    \"name\": \"Cliente 1 UP ###\",\r\n    \"address\": {\r\n        \"id\": \"2177de69-b328-490b-9acf-4aaf4bd9d554\",\r\n        \"street\": \"streeet 1 ###\",\r\n        \"number\": \"105B\"\r\n    },\r\n    \"bankAccounts\": [\r\n        {\r\n            \"id\": \"94cc810a-77ae-411b-9c09-2ee9b8df71d0\",\r\n            \"accountData\": \"conta:2002;agencia:123 ###\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7075/client",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7075",
+							"path": [
+								"client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7075/client/list?page=1&size=10",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7075",
+							"path": [
+								"client",
+								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -3,12 +3,17 @@ namespace CleanArch.Domain.DomainObjects
 {
     public abstract class EntityBase
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
+        public DateTime CreatedDate { get; private set; }
+        public DateTime UpdatedDate { get; private set; }
 
-        public DateTime CreatedDate { get; set; }
+        //public virtual void Validate()
+        //{ }
 
-        public DateTime UpdatedDate { get; set; }
+        public void SetCreatedDate(DateTime createdDate) =>
+            CreatedDate = createdDate;
 
-        public abstract void Validate();
+        public void SetUpdatedDate(DateTime updatedDate) =>
+            UpdatedDate = updatedDate;
     }
 }

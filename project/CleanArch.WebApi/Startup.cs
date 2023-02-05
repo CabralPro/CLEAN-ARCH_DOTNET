@@ -18,6 +18,7 @@ namespace CleanArch.WebApi
             services.AddEndpointsApiExplorer();
             services.AddSwagger();
             services.AddAutoMapperConfig();
+            services.AddMediatRConfig();
             services.AddInfraDataDependencies(Configuration);
         }
 
