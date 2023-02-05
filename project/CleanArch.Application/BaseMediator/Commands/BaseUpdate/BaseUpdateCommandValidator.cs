@@ -3,8 +3,8 @@ using FluentValidation;
 
 namespace CleanArch.Application.BaseMediator.Commands.BaseUpdate
 {
-    public class BaseUpdateCommandValidator<T> : AbstractValidator<BaseUpdateCommand<T>>
-            where T : DtoBase
+    public class BaseUpdateCommandValidator<TDto> : AbstractValidator<BaseUpdateCommand<TDto>>
+            where TDto : DtoBase
     {
         public BaseUpdateCommandValidator()
         {

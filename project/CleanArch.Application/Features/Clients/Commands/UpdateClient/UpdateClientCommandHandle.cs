@@ -7,7 +7,7 @@ using CleanArch.Domain.Interfaces;
 
 namespace CleanArch.Application.Features.Clients.Commands.UpdateClient
 {
-    public class UpdateClientCommandHandle : BaseUpdateCommandHandle<Client, ClientDto>
+    public class UpdateClientCommandHandle : BaseUpdateCommandHandle<Client, ClientDto, UpdateClientCommand>
     {
         public UpdateClientCommandHandle(
             IClientRepository repository,

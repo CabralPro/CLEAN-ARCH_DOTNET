@@ -4,15 +4,15 @@ using MediatR;
 
 namespace CleanArch.Application.BaseMediator.Commands.BaseUpdate
 {
-    public class BaseUpdateCommand<T> : IRequest<T>
-        where T : DtoBase
+    public class BaseUpdateCommand<TDto> : IRequest<TDto>
+        where TDto : DtoBase
     {
-        public T Dto { get; private set; }
+        public TDto Dto { get; private set; }
 
-        public BaseUpdateCommand(T dto)
+        public BaseUpdateCommand(TDto dto)
         {
             Dto = dto;
-            new BaseUpdateCommandValidator<T>().ValidateAndThrow(this);
+            new BaseUpdateCommandValidator<TDto>().ValidateAndThrow(this);
         }
     }
 }
