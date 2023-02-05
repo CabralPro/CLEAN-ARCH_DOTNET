@@ -1,5 +1,5 @@
-﻿using CleanArch.Application.BaseMediator.Queries.BaseGetById;
-using CleanArch.Application.Dtos;
+﻿using CCleanArch.Application.Dtos.Clients;
+using CleanArch.Application.BaseMediator.Queries.BaseGetById;
 
 namespace CleanArch.Application.Features.Clients.Queries.GetClientById
 {

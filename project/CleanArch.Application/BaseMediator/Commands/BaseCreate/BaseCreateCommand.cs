@@ -4,11 +4,11 @@ using MediatR;
 
 namespace CleanArch.Application.BaseMediator.Commands.BaseCreate
 {
-    public class BaseCreateCommand<TResponse> : IRequest<TResponse>
+    public abstract class BaseCreateCommand<TResponse, TDto> : IRequest<TResponse>
     {
-        public dynamic Dto { get; private set; }
+        public TDto Dto { get; private set; }
 
-        public BaseCreateCommand(dynamic dto)
+        public BaseCreateCommand(TDto dto)
         {
             Dto = dto;
             //new BaseCreateCommandValidator<TDto>().ValidateAndThrow(this);

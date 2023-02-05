@@ -1,5 +1,5 @@
 using AutoMapper;
-using CleanArch.Application.Dtos;
+using CCleanArch.Application.Dtos.Clients;
 using CleanArch.Application.Features.Clients.Commands.CreateClient;
 using CleanArch.Application.Features.Clients.Commands.DeleteClient;
 using CleanArch.Application.Features.Clients.Commands.RemoveInternalDeletedEntitiesClient;

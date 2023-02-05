@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
+using CCleanArch.Application.Dtos.Clients;
 using CleanArch.Application.BaseMediator.Commands.BaseCreate;
-using CleanArch.Application.Dtos;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces;
 
 namespace CleanArch.Application.Features.Clients.Commands.CreateClient
 {
-    public class CreateClientCommandHandle : BaseCreateCommandHandle<Client, CreateClientCommand, ClientDto>
+    public class CreateClientCommandHandle : CreateCommandHandler<Client, CreateClientCommand, ClientDto>
     {
         public CreateClientCommandHandle(
             IClientRepository repository,

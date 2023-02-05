@@ -1,9 +1,9 @@
-﻿
+﻿using CleanArch.Application.Dtos;
 using CleanArch.Domain.DomainObjects;
 using FluentValidation;
 using System.Text.Json.Serialization;
 
-namespace CleanArch.Application.Dtos
+namespace CCleanArch.Application.Dtos.Clients
 {
     public class ClientDto : DtoBase
     {

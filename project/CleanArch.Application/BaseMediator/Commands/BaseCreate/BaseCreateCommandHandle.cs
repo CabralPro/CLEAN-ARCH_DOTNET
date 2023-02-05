@@ -5,9 +5,9 @@ using MediatR;
 
 namespace CleanArch.Application.BaseMediator.Commands.BaseCreate
 {
-    public class BaseCreateCommandHandle<TEntity, Tcommand, TResponse> : IRequestHandler<Tcommand, TResponse>
+    public abstract class BaseCreateCommandHandle<TEntity, Tcommand, TResponse, TDto> : IRequestHandler<Tcommand, TResponse>
         where TEntity : EntityBase
-        where Tcommand : BaseCreateCommand<TResponse>
+        where Tcommand : BaseCreateCommand<TResponse, TDto>
     {
         public readonly IBaseRepository<TEntity> Repository;
         public readonly IMapper Mapper;

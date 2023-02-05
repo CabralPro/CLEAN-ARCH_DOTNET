@@ -1,5 +1,4 @@
-﻿using CleanArch.Application.Dtos;
-using CleanArch.Application.Features.Clients.Commands.CreateClient;
+﻿using CCleanArch.Application.Dtos.Clients;
 using CleanArch.Application.Features.Clients.Commands.DeleteClient;
 using CleanArch.Application.Features.Clients.Commands.RemoveInternalDeletedEntitiesClient;
 using CleanArch.Application.Features.Clients.Commands.UpdateClient;

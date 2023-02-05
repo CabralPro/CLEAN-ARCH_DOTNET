@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using CCleanArch.Application.Dtos.Clients;
 using CleanArch.Application.BaseMediator.Queries.BaseGetById;
-using CleanArch.Application.Dtos;
 using CleanArch.Domain.Entities;
 using CleanArch.Domain.Interfaces;
 
